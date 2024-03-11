@@ -6,10 +6,14 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity'
 import { AuthModule } from './auth/auth.module';
 import { Permission } from './users/entities/permission.entity';
-import { Profile, Social } from './users/entities/profile.entity';
+import { Profile } from './users/entities/profile.entity';
 import { ShopsModule } from './shops/shops.module';
 import { AddressesModule } from './addresses/addresses.module';
 import { Address } from './addresses/entities/address.entity';
+import { Shop } from './shops/entities/shop.entity';
+import { Social } from './common/entities/social.entity';
+import { CategoriesModule } from './categories/categories.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -21,11 +25,13 @@ import { Address } from './addresses/entities/address.entity';
       password: 'admin',
       database: 'online_store_manager',
       entities: [
+        Shop,
         User,
         Permission,
         Profile,
         Social,
-        Address
+        Address,
+        
       ],
       synchronize: true,
     }),
@@ -33,6 +39,8 @@ import { Address } from './addresses/entities/address.entity';
     AuthModule,
     ShopsModule,
     AddressesModule,
+    CategoriesModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

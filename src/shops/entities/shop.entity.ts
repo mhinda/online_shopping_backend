@@ -1,24 +1,72 @@
 // import { UserAddress } from 'src/addresses/entities/address.entity';
 // import { Attachment } from 'src/common/entities/attachment.entity';
-// import { CoreEntity } from 'src/common/entities/core.entity';
+import { Attachment } from 'src/common/entities/attachment.entity';
+import { Social } from 'src/common/entities/social.entity';
 // import { Location, ShopSocials } from 'src/settings/entities/setting.entity';
-// import { User } from 'src/users/entities/user.entity';
+import { User } from 'src/users/entities/user.entity';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 
-// export class Shop extends CoreEntity {
-//     owner_id: number;
-//     owner: User;
-//     staffs?: User[];
-//     is_active: boolean;
+@Entity()
+export class Shop extends Attachment {
+    @OneToOne(() => User, owner => owner.shopOwner)
+    @JoinColumn({ name: 'user_id' })
+    owner: User;
+
+    @Column()
+    name: string;
+
+    @Column()
+    slug: string;
+
+    @Column()
+    description?: string;    
+
+    @Column()
+    street_address: string;
+
+    @Column()
+    country: string;
+
+    @Column()
+    city: string;
+
+    @Column()
+    state: string;
+
+    @Column()
+    zip: string;
+
+    @Column()
+    email: string;
+
+    @Column()
+    phone: string
+
+    @Column()
+    mobile: string
+
+    @Column()
+    website: string;
+
+    @OneToMany(() => User, staffs => staffs.shopStaff)
+    staffs?: User[];
+
+    @Column()
+    is_active: boolean;
+
+    @OneToMany(() => Social, socials => socials.shop)
+    socials?: Social[];
+
+
+}
+
 //     orders_count: number;
 //     products_count: number;
 //     balance?: Balance;
-//     name: string;
-//     slug: string;
-//     description?: string;
+
 //     cover_image: Attachment;
 //     logo?: Attachment;
 //     address: UserAddress;
-//     settings?: ShopSettings;
 //     distance?: string;
 //     lat?: string;
 //     lng?: string;
@@ -40,10 +88,14 @@
 //     email: string;
 //     bank: string;
 // }
+@Entity()
+export class ShopSettings {
+    // socials: ShopSocials[];
 
-// export class ShopSettings {
-//     socials: ShopSocials[];
-//     contact: string;
-//     location: Location;
-//     website: string;
-// }
+    @Column()
+    contact: string;
+    // location: Location;
+
+    @Column()
+    website: string;
+}

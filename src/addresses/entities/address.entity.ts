@@ -10,9 +10,6 @@ export enum AddressType {
 @Entity()
 export class Address extends CoreEntity {
     @Column()
-    title: string;
-
-    @Column()
     default: boolean;
 
     @Column()
