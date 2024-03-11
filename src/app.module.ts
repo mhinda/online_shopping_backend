@@ -14,6 +14,10 @@ import { Shop } from './shops/entities/shop.entity';
 import { Social } from './common/entities/social.entity';
 import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
+import { Category } from './categories/entities/category.entity';
+import { Product } from './products/entities/product.entity';
+import { OrdersModule } from './orders/orders.module';
+import { CartsModule } from './carts/carts.module';
 
 @Module({
   imports: [
@@ -31,7 +35,8 @@ import { ProductsModule } from './products/products.module';
         Profile,
         Social,
         Address,
-        
+        Category,
+        Product
       ],
       synchronize: true,
     }),
@@ -41,6 +46,8 @@ import { ProductsModule } from './products/products.module';
     AddressesModule,
     CategoriesModule,
     ProductsModule,
+    OrdersModule,
+    CartsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

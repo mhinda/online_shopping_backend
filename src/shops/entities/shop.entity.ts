@@ -2,6 +2,7 @@
 // import { Attachment } from 'src/common/entities/attachment.entity';
 import { Attachment } from 'src/common/entities/attachment.entity';
 import { Social } from 'src/common/entities/social.entity';
+import { Product } from 'src/products/entities/product.entity';
 // import { Location, ShopSocials } from 'src/settings/entities/setting.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
@@ -56,6 +57,9 @@ export class Shop extends Attachment {
 
     @OneToMany(() => Social, socials => socials.shop)
     socials?: Social[];
+
+    @OneToMany(() => Product, products => products.shop)
+    products: Product[]
 
 
 }
