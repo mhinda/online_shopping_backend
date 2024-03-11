@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class UsersService {
 
-  constructor(@InjectRepository(User) public repo: Repository<User>) { }
+  constructor(@InjectRepository(User) private readonly repo: Repository<User>) { }
 
   create(name: string, email: string, password: string) {
     const user = this.repo.create({ name, email, password });

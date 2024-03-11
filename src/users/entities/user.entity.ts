@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToOne } from "typeorm";
 import { CoreEntity } from 'src/common/entities/core.entity';
+import { Profile } from "./profile.entity";
 
 @Entity()
 export class User extends CoreEntity {
@@ -11,4 +12,8 @@ export class User extends CoreEntity {
 
     @Column()
     password: string;
+
+    @OneToOne(() => Profile, profile => profile.user)
+    profile: Profile
 }
+
