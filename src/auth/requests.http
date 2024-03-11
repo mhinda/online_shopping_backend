@@ -1,0 +1,9 @@
+#### REGISTER USER
+POST http://localhost:5001/api/register
+Content-Type: application/json
+
+{
+    "name": "Amani Mhinda",
+    "email": "amani.mhinda@gmail.com",
+    "password": "plmpoi"
+}
