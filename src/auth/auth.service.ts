@@ -1,31 +1,34 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { UsersService } from "../users/users.service";
-import { promisify } from "util";
-import { scrypt as _scrypt, randomBytes } from "crypto";
-
-const scrypt = promisify(_scrypt);
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly usersService: UsersService) { }
+    salt_or_rounds: number = 10;
 
-    async signup(name: string, email: string, password: string) {
+    constructor(
+        private readonly usersService: UsersService,
+        private readonly jwtService: JwtService
+    ) { }
+
+    async signup({ name, email, password }) {
         const users = await this.usersService.findBy(email);
 
         if (users.length) {
             throw new BadRequestException('Email is in use');
         }
 
-        const salt = randomBytes(8).toString('hex');
+        const hash_password = await bcrypt.hash(password, this.salt_or_rounds)
 
-        const hash = (await scrypt(password, salt, 32)) as Buffer;
+        const user = await this.usersService.create(name, email, hash_password)
 
-        // const result = salt + '.' + hash.toString('hex');
+        const payload = { sub: user.id, name: user.name, email: user.email };
 
-        const result = `${salt}.${hash.toString('hex')}`;
-        const user = await this.usersService.create(name, email, result)
+        return {
+            access_token: await this.jwtService.signAsync(payload),
+        };
 
-        return user;
     }
 
     async signin(email: string, password: string) {
