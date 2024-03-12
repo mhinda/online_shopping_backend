@@ -18,6 +18,7 @@ import { Category } from './categories/entities/category.entity';
 import { Product } from './products/entities/product.entity';
 import { OrdersModule } from './orders/orders.module';
 import { CartsModule } from './carts/carts.module';
+import { Order, OrderItem } from './orders/entities/order.entity';
 
 @Module({
   imports: [
@@ -36,7 +37,9 @@ import { CartsModule } from './carts/carts.module';
         Social,
         Address,
         Category,
-        Product
+        Product,
+        Order,
+        OrderItem
       ],
       synchronize: true,
     }),

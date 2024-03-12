@@ -1,7 +1,8 @@
 import { Category } from "src/categories/entities/category.entity";
 import { CoreEntity } from "src/common/entities/core.entity";
+import { OrderItem } from "src/orders/entities/order.entity";
 import { Shop } from "src/shops/entities/shop.entity";
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany } from "typeorm";
 
 @Entity()
 export class Product extends CoreEntity {
@@ -19,8 +20,6 @@ export class Product extends CoreEntity {
     categories: Category[];
 
     // tags?: Tag[];
-
-    // orders?: Order[];
 
     @ManyToOne(() => Shop, shop => shop.products)
     shop: Shop;
@@ -67,6 +66,10 @@ export class Product extends CoreEntity {
 
     @Column()
     unit: string;
+
+    @OneToMany(() => OrderItem, orderItems => orderItems.product)
+    orderItems?: OrderItem[];
+
 
     // ratings: number;
 

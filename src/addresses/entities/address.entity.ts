@@ -1,6 +1,7 @@
 import { CoreEntity } from 'src/common/entities/core.entity';
+import { Order } from 'src/orders/entities/order.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 export enum AddressType {
     BILLING = 'billing',
@@ -12,7 +13,10 @@ export class Address extends CoreEntity {
     @Column()
     default: boolean;
 
-    @Column()
+    @Column({
+        type: 'enum',
+        enum: AddressType
+    })
     type: AddressType;
 
     @Column()
@@ -29,6 +33,9 @@ export class Address extends CoreEntity {
 
     @Column()
     zip: string;
+
+    @OneToMany(() => Order, order => order.address)
+    order: Order
 
     // @Column()
     // customer: User;
