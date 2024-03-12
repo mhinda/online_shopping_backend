@@ -3,7 +3,16 @@ POST http://localhost:5000/api/auth/register
 Content-Type: application/json
 
 {
-    "name": "Amani Mhinda",
-    "email": "asddqqaacwe2.mhinda@gmail.com",
+    "name": "John Doe",
+    "email": "john@localmail.local",
+    "password": "plmpoi"
+}
+
+### LOGIN AS REGISTERED USER
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "john@localmail.local",
     "password": "plmpoi"
 }

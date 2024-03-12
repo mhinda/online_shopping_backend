@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { UsersService } from "../users/users.service";
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -24,27 +24,29 @@ export class AuthService {
         const user = await this.usersService.create(name, email, hash_password)
 
         const payload = { sub: user.id, name: user.name, email: user.email };
+        const access_token = await this.jwtService.signAsync(payload);
 
-        return {
-            access_token: await this.jwtService.signAsync(payload),
-        };
+        return { access_token };
 
     }
 
-    async signin(email: string, password: string) {
+
+    async signin({ email, password}) {
         const [user] = await this.usersService.findBy(email);
         if (!user) {
-            throw new NotFoundException('User not found')
+            throw new UnauthorizedException('Invalid username or password')
         }
 
-        const [salt, storedHash] = user.password.split('.');
+        const passwordIsValid = await user.validatePassword(password);
 
-        const hash = (await scrypt(password, salt, 32)) as Buffer;
-
-        if (storedHash !== hash.toString('hex')) {
-            throw new BadRequestException('Invalid password');
+        if (!passwordIsValid) {
+            throw new UnauthorizedException('Invalid username or password');
         }
 
-        return user
+        const payload = { sub: user.id, name: user.name, email: user.email };
+        const access_token = await this.jwtService.signAsync(payload);
+
+        return { access_token };
+        
     }
 }

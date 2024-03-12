@@ -3,6 +3,7 @@ import { CoreEntity } from 'src/common/entities/core.entity';
 import { Profile } from "./profile.entity";
 import { Shop } from "src/shops/entities/shop.entity";
 import { Order } from "src/orders/entities/order.entity";
+import * as bcrypt from 'bcrypt';
 
 @Entity()
 export class User extends CoreEntity {
@@ -26,6 +27,10 @@ export class User extends CoreEntity {
 
     @OneToMany(() => Order, orders => orders.customer)
     orders?: Order[];
+
+    validatePassword(password: string): Promise<boolean> {
+        return bcrypt.compare(password, this.password);
+    }
 
 }
 
