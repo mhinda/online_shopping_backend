@@ -16,3 +16,24 @@ Content-Type: application/json
     "email": "john@localmail.local",
     "password": "plmpoi"
 }
+
+
+### FIND ALL USERS
+GET  http://localhost:5000/api/users
+
+### FIND ONE USER BY ID
+GET  http://localhost:5000/api/users/2
+
+
+### UPDATE USER
+PATCH  http://localhost:5000/api/users/1
+Content-Type: application/json
+
+{
+    "name": "eee123OKAAAAJohn Doe",
+    "email": "sssdsddsdsdfdfsr123OKjjjjohn@localmail.local",
+    "password": "plmpoi"
+}
+
+### DELETE USER
+DELETE   http://localhost:5000/api/users/2

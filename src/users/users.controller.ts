@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Serialize } from 'src/interceptors/custom-serializer.interceptor';
@@ -12,14 +12,14 @@ export class UsersController {
   ) { }
 
 
-  @Get('users')
+  @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    return this.usersService.findOneBy(+id);
   }
 
   @Patch(':id')
